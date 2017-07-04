@@ -20,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import app.cafepos.R;
@@ -102,7 +103,7 @@ public class FragmentTwo extends Fragment implements SwipeRefreshLayout.OnRefres
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
 
-                    JSONArray products = jsonObj.getJSONArray("products");
+                    JSONArray products = jsonObj.getJSONArray("producten");
 
                     for (int i = 0; i < products.length(); i++) {
                         JSONObject c = products.getJSONObject(i);
@@ -110,24 +111,26 @@ public class FragmentTwo extends Fragment implements SwipeRefreshLayout.OnRefres
                         String id = c.getString("id");
                         String name = c.getString("naam");
                         String price = "€" + String.format("%.2f", (Double.parseDouble(c.getString("prijs"))/100));
-                        String type = c.getString("type");
+                        String sub = c.getString("subcategorieen_id");
 
-                        if (type.equals("drinken")){
-                            HashMap<String, String> drink = new HashMap<>();
-                            drink.put("id", id);
-                            drink.put("name", name);
-                            drink.put("price", price);
-
-                            drinksList.add(drink);
-                        }
-                        else
-                        {
+                        if (sub.equals("2") || sub.equals("3") || sub.equals("4")){
                             HashMap<String, String> food = new HashMap<>();
                             food.put("id", id);
                             food.put("name", name);
                             food.put("price", price);
+                            food.put("type", "eten");
 
                             foodList.add(food);
+                        }
+                        else
+                        {
+                            HashMap<String, String> drink = new HashMap<>();
+                            drink.put("id", id);
+                            drink.put("name", name);
+                            drink.put("price", price);
+                            drink.put("type", "drinken");
+
+                            drinksList.add(drink);
                         }
                     }
                 } catch (final JSONException e) {
@@ -149,7 +152,7 @@ public class FragmentTwo extends Fragment implements SwipeRefreshLayout.OnRefres
                     @Override
                     public void run() {
                         Toast.makeText(getActivity().getApplicationContext(),
-                                "Kon JSON niet van de server halen, check logcat voor mogelijk errors",
+                                "Kon de data niet ophalen, controleer je internet connectie",
                                 Toast.LENGTH_LONG)
                                 .show();
                     }

@@ -2,14 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe_refresh_layout2"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:fillViewport="true"
     tools:context="app.cafepos.FragmentTwo">
 
     <ListView
         android:id="@+id/list2"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:scrollbars="none" />
 
 </android.support.v4.widget.SwipeRefreshLayout>
